@@ -231,21 +231,40 @@ const resolvers = {
 
       return newCar;
     },
-    updateCar: (root, args) => {
-      const car = find(cars, { id: args.id });
 
-      if (!car) {
+    updateCar: (root, args) => {
+      const index = cars.findIndex((car) => car.id === args.id);
+
+      if (index === -1) {
         throw new Error(`Couldn't find car with id ${args.id}`);
       }
 
-      car.year = args.year;
-      car.make = args.make;
-      car.model = args.model;
-      car.price = args.price;
-      car.personId = args.personId;
+      const updatedCar = {
+        ...cars[index],
+        year: args.year,
+        make: args.make,
+        model: args.model,
+        price: args.price,
+        personId: args.personId,
+      };
 
-      return car;
+      cars[index] = updatedCar;
+
+      const owner = people.find((person) => person.id === updatedCar.personId);
+      if (!owner) {
+        throw new Error(`Couldn't find person with id ${updatedCar.personId}`);
+      }
+
+      return {
+        ...updatedCar,
+        person: {
+          id: owner.id,
+          firstName: owner.firstName,
+          lastName: owner.lastName,
+        },
+      };
     },
+
     removeCar: (root, args) => {
       const removedCar = find(cars, { id: args.id });
 

@@ -7,13 +7,18 @@ import { GET_PEOPLE } from "../../graphql/queries";
 
 import { v4 as uuidv4 } from "uuid";
 import { ADD_CAR, GET_CARS } from "../../graphql/queries";
+import FormItem from "antd/es/form/FormItem";
 
 const AddCar = () => {
   const [id] = useState(uuidv4());
   const [form] = Form.useForm();
   const [, forceUpdate] = useState();
   const { loading, error, data } = useQuery(GET_PEOPLE);
-  const [addCar] = useMutation(ADD_CAR);
+  // AddCar.js
+  const [addCar] = useMutation(ADD_CAR, {
+    refetchQueries: [{ query: GET_CARS }], // Add this line
+    awaitRefetchQueries: true, // And this line
+  });
 
   useEffect(() => {
     forceUpdate({});
@@ -51,13 +56,14 @@ const AddCar = () => {
         name="add-car-form"
         layout="inline"
         size="large"
-        style={{ marginBottom: "40px" }}
+        style={{ margin: "40px", width: "80%", justifyContent: "center" }}
         form={form}
         onFinish={onFinish}
       >
         <Form.Item
           label="Year"
           name="year"
+          style={{ marginBottom: "10px" }}
           rules={[{ required: true, message: "Please enter a year" }]}
         >
           <Input placeholder="i.e. 2020" />
@@ -67,6 +73,7 @@ const AddCar = () => {
           label="Make"
           required={true}
           name="make"
+          style={{ marginBottom: "10px" }}
           rules={[{ required: true, message: "Please enter a make" }]}
         >
           <Input placeholder="i.e. Honda" />
@@ -75,6 +82,7 @@ const AddCar = () => {
         <Form.Item
           label="Model"
           name="model"
+          style={{ marginBottom: "10px" }}
           rules={[{ required: true, message: "Please enter a model" }]}
         >
           <Input placeholder="i.e. Civic" />
@@ -83,6 +91,7 @@ const AddCar = () => {
         <Form.Item
           label="Price"
           name="price"
+          style={{ marginBottom: "10px" }}
           rules={[{ required: true, message: "Please enter a price" }]}
         >
           <Input placeholder="$" />
@@ -91,6 +100,7 @@ const AddCar = () => {
         <Form.Item
           label="Owner"
           name="owner"
+          style={{ marginBottom: "10px" }}
           rules={[{ required: true, message: "Please select an owner" }]}
         >
           {loading ? (
@@ -98,7 +108,10 @@ const AddCar = () => {
           ) : error ? (
             <p>Error :(</p>
           ) : (
-            <Select placeholder="Select an owner">
+            <Select
+              placeholder="Select an owner"
+              style={{ marginBottom: "10px" }}
+            >
               {data.people.map((person) => (
                 <Select.Option key={person.id} value={person.id}>
                   {person.firstName} {person.lastName}
@@ -113,6 +126,7 @@ const AddCar = () => {
             <Button
               type="primary"
               htmlType="submit"
+              style={{ marginBottom: "10px" }}
               disabled={
                 !form.isFieldsTouched(true) ||
                 !!form.getFieldsError().filter(({ errors }) => errors.length)
@@ -127,4 +141,6 @@ const AddCar = () => {
     </>
   );
 };
+
+
 export default AddCar;
