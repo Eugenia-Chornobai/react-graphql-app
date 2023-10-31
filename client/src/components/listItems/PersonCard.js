@@ -31,10 +31,16 @@ const PersonCard = (props) => {
             <RemovePerson id={id} />,
           ]}
         >
-          {firstName} {lastName}
+          <h3>
+            {firstName} {lastName}
+          </h3>
+          <div>
+              <Link
+                style={styles.link}
+                to={`/person/${id}`}>Learn More</Link>
+          </div>
         </Card>
       )}
-      <Link to={`/person/${id}`}>Show</Link>
     </div>
   );
 };
@@ -43,6 +49,10 @@ const getStyles = () => ({
   card: {
     width: "500px",
   },
+  link: {
+    display: "flex",
+    textAlign: "left",
+  }
 });
 
 export default PersonCard;

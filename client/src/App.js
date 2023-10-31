@@ -1,11 +1,9 @@
+
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Title from "./components/layout/Title";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import AddPerson from "./components/forms/AddPerson";
-import AddCar from "./components/forms/AddCar";
-import People from "./components/lists/People";
-import Cars from "./components/lists/Cars";
-import { BrowserRouter as Router } from "react-router-dom";
+import Home from "./pages/Home";
+import Show from "./pages/Show";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
@@ -15,17 +13,19 @@ const client = new ApolloClient({
 const App = () => {
   return (
     <ApolloProvider client={client}>
-      <Router basename="/">
+      <Router>
         <div className="App">
-          <Title />
-          <AddPerson />
-          <AddCar />
-          <People />
-          <Cars />
+          <Routes>
+            <Route
+              path="/"
+              element={<Home />}  
+            />
+            <Route path="/person/:id" Component={Show} />
+          </Routes>
         </div>
       </Router>
     </ApolloProvider>
   );
-};
+}
 
 export default App;
