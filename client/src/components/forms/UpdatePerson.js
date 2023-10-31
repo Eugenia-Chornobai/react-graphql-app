@@ -27,49 +27,50 @@ const UpdatePerson = (props) => {
     props.onButtonClick();
   };
 
-    return (
-      <>
-        <h2>Update Person</h2>
-    <Form
-      form={form}
-      name="update-person-form"
-      layout="inline"
-      onFinish={onFinish}
-      initialValues={{
-        firstName,
-        lastName,
-      }}
-    >
-      <Form.Item
-        name="firstName"
-        rules={[{ required: true, message: "Please enter a first name" }]}
+  return (
+    <>
+      <h2>Update Person</h2>
+      <Form
+        form={form}
+        name="update-person-form"
+        layout="inline"
+        onFinish={onFinish}
+        initialValues={{
+          firstName,
+          lastName,
+        }}
       >
-        <Input placeholder="i.e. John" />
-      </Form.Item>
-      <Form.Item
-        name="lastName"
-        rules={[{ required: true, message: "Please enter a last name" }]}
-      >
-        <Input placeholder="i.e. Smith" />
-      </Form.Item>
-      <Form.Item shouldUpdate={true}>
-        {() => (
-          <Button
-            type="primary"
-            htmlType="submit"
-            disabled={
-              (!form.isFieldTouched("firstName") &&
-                !form.isFieldTouched("lastName")) ||
-              form.getFieldsError().filter(({ errors }) => errors.length).length
-            }
-          >
-            Update Person
-          </Button>
-        )}
-      </Form.Item>
-      <Button onClick={props.onButtonClick}>Cancel</Button>
-        </Form>
-        </>
+        <Form.Item
+          name="firstName"
+          rules={[{ required: true, message: "Please enter a first name" }]}
+        >
+          <Input placeholder="i.e. John" />
+        </Form.Item>
+        <Form.Item
+          name="lastName"
+          rules={[{ required: true, message: "Please enter a last name" }]}
+        >
+          <Input placeholder="i.e. Smith" />
+        </Form.Item>
+        <Form.Item shouldUpdate={true}>
+          {() => (
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled={
+                (!form.isFieldTouched("firstName") &&
+                  !form.isFieldTouched("lastName")) ||
+                form.getFieldsError().filter(({ errors }) => errors.length)
+                  .length
+              }
+            >
+              Update Person
+            </Button>
+          )}
+        </Form.Item>
+        <Button onClick={props.onButtonClick}>Cancel</Button>
+      </Form>
+    </>
   );
 };
 

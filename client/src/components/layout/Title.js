@@ -1,5 +1,3 @@
-
-
 const Title = () => {
   const styles = getStyles();
 
@@ -8,9 +6,12 @@ const Title = () => {
 
 const getStyles = () => ({
   title: {
-    fontSize: 50,
+    fontSize: 30,
     padding: "15px",
     marginBottom: "50px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
 });
 

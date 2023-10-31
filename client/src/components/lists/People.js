@@ -16,20 +16,22 @@ const People = () => {
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
 
-  console.log("data", data);
+  // console.log("data", data);
 
-    return (
-        <>
-            <h2>Records</h2>
-        <List grid={{ gutter: 20, column: 1 }} style={styles.list}>
-          {data.people.map(({ id, firstName, lastName }) => (
-            <List.Item key={id}>
-              <PersonCard id={id} firstName={firstName} lastName={lastName} />
-            </List.Item>
-          ))}
-        </List>
-      </>
-    );
+  const sortedPeople = [...data.people].sort((a, b) => a.firstName.localeCompare(b.firstName));
+
+  return (
+    <>
+      <h2>Records</h2>
+      <List grid={{ gutter: 20, column: 1 }} style={styles.list}>
+        {sortedPeople.map(({ id, firstName, lastName }) => (
+          <List.Item key={id}>
+            <PersonCard id={id} firstName={firstName} lastName={lastName} />
+          </List.Item>
+        ))}
+      </List>
+    </>
+  );
 };
 
 export default People;

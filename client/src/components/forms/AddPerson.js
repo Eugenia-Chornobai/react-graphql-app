@@ -1,7 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { Button, Form, Input } from "antd";
 import { useEffect, useState } from "react";
-
 import { v4 as uuidv4 } from "uuid";
 import { ADD_PERSON, GET_PEOPLE } from "../../graphql/queries";
 
@@ -38,47 +37,51 @@ const AddPerson = () => {
     });
   };
 
-    return (
-      <>
-        <h2>Add Person</h2>
-        <Form
-          name="add-person-form"
-          layout="inline"
-          size="large"
-          style={{ marginBottom: "40px" }}
-          form={form}
-          onFinish={onFinish}
+  return (
+    <>
+      <h2>Add Person</h2>
+      <Form
+        name="add-person-form"
+        layout="inline"
+        size="large"
+        style={{ marginBottom: "40px" }}
+        form={form}
+        onFinish={onFinish}
+      >
+        <Form.Item
+          label="First Name"
+          required={true}
+          name="firstName"
+          rules={[{ required: true, message: "Please enter a first name" }]}
         >
-          <Form.Item
-            name="firstName"
-            rules={[{ required: true, message: "Please enter a first name" }]}
-          >
-            <Input placeholder="i.e. John" />
-          </Form.Item>
-          <Form.Item
-            name="lastName"
-            rules={[{ required: true, message: "Please enter a last name" }]}
-          >
-            <Input placeholder="i.e. Smith" />
-          </Form.Item>
-          <Form.Item shouldUpdate={true}>
-            {() => (
-              <Button
-                type="primary"
-                htmlType="submit"
-                disabled={
-                  !form.isFieldsTouched(true) ||
-                  form.getFieldsError().filter(({ errors }) => errors.length)
-                    .length
-                }
-              >
-                Add Person
-              </Button>
-            )}
-          </Form.Item>
-        </Form>
-      </>
-    );
+          <Input placeholder="i.e. John" />
+        </Form.Item>
+        <Form.Item
+          label="Last Name"
+          required={true}
+          name="lastName"
+          rules={[{ required: true, message: "Please enter a last name" }]}
+        >
+          <Input placeholder="i.e. Smith" />
+        </Form.Item>
+        <Form.Item shouldUpdate={true}>
+          {() => (
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled={
+                !form.isFieldsTouched(true) ||
+                form.getFieldsError().filter(({ errors }) => errors.length)
+                  .length
+              }
+            >
+              Add Person
+            </Button>
+          )}
+        </Form.Item>
+      </Form>
+    </>
+  );
 };
 
 export default AddPerson;
