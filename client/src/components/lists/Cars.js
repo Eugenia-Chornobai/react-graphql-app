@@ -3,6 +3,7 @@ import { GET_CARS } from "../../graphql/queries";
 import { List } from "antd";
 import CarCard from "../listItems/CarCard";
 
+
 const getStyles = () => ({
   list: {
     display: "flex",
@@ -24,20 +25,21 @@ const Cars = () => {
     <>
       <h2>Records</h2>
       <List grid={{ gutter: 20, column: 1 }} style={styles.list}>
-        {sortedCars.map(
-          ({ id, make, model, year, price, person }) => (
-            <List.Item key={id}>
-              <CarCard
-                id={id}
-                make={make}
-                model={model}
-                year={year}
-                price={price}
-                person={person}
-              />
-            </List.Item>
-          )
-        )}
+        {sortedCars.map(({ id, make, model, year, price, person }) => (
+          <List.Item
+            style={{ display: "flex", justifyContent: "center" }}
+            key={id}
+          >
+            <CarCard
+              id={id}
+              make={make}
+              model={model}
+              year={year}
+              price={price}
+              person={person}
+            />
+          </List.Item>
+        ))}
       </List>
     </>
   );
